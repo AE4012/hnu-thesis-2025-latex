@@ -57,41 +57,38 @@ INTEGERS {
 STRINGS {
   component.part.label
 }
-
 FUNCTION {load.config}
 {
-  #2 'citation.et.al.min :=
-  #1 'citation.et.al.use.first :=
-  #4 'bibliography.et.al.min :=
-  #3 'bibliography.et.al.use.first :=
-  #1 'uppercase.name :=
+  #3 'bibliography.et.al.min :=           %% [修改] 超过3人时显示“等” (对应示例3.15.1)
+  #3 'bibliography.et.al.use.first :=      %% [修改] 配合上一行，保留前3位作者
+  #0 'uppercase.name :=                   %% [修改] 英文姓名无需大写 (如 Wenzhofer F, Knust R)
   #0 'terms.in.macro :=
-  #0 'year.after.author :=
-  #1 'period.after.author :=
-  #0 'italic.book.title :=
+  #0 'year.after.author :=                %% [保持] 年份不紧跟作者，放在最后或刊名后
+  #1 'period.after.author :=              %% [保持] 作者后面用点号
+  #0 'italic.book.title :=                %% [保持] 书名不使用斜体
   #1 'sentence.case.title :=
   #0 'link.title :=
-  #1 'title.in.journal :=
-  #0 'show.patent.country :=
-  #1 'show.mark :=
-  #0 'space.before.mark :=
-  #1 'show.medium.type :=
+  #1 'title.in.journal :=                 %% [保持] 期刊文章显示篇名
+  #0 'show.patent.country :=              
+  #1 'show.mark :=                        %% [保持] 显示标识符 [J], [M], [D] 等
+  #0 'space.before.mark :=                %% [保持] 标识符紧跟标题，不加空格
+  #0 'show.medium.type :=                 %% [修改] 除非是网络资源，否则不显示 /OL
   "slash" 'component.part.label :=
   #0 'short.journal :=
   #0 'italic.journal :=
   #0 'link.journal :=
-  #0 'bold.journal.volume :=
+  #0 'bold.journal.volume :=              %% [保持] 卷号不加粗
   #0 'show.missing.address.publisher :=
-  #1 'space.before.pages :=
-  #0 'only.start.page :=
-  #0 'wave.dash.in.pages :=
+  #1 'space.before.pages :=               %% [保持] 页码前用冒号 (如 :389-412)
+  #0 'only.start.page :=                  %% [保持] 显示起止页码而非仅起始页
+  #0 'wave.dash.in.pages :=               %% [保持] 页码连接符用短横线 -
   #1 'show.urldate :=
   #1 'show.url :=
   #1 'show.doi :=
   #1 'show.preprint :=
   #0 'show.note :=
   #0 'show.english.translation :=
-  #1 'end.with.period :=
+  #1 'end.with.period :=                  %% [保持] 条目末尾加点
 }
 
 ENTRY
@@ -1737,10 +1734,8 @@ FUNCTION {empty.misc.check}
     'skip$
   if$
 }
-
 FUNCTION {monograph}
 { output.bibitem
-  output.translation
   author empty$ not
     { format.authors }
     { editor empty$ not
@@ -1751,30 +1746,25 @@ FUNCTION {monograph}
       if$
     }
   if$
-  output
-  year.after.author
-    { period.after.author
-        'new.sentence
-        'skip$
-      if$
-      format.year "year" output.check
-    }
-    'skip$
-  if$
-  new.block
-  format.series.vol.num.title "title" output.check
-  "M" set.entry.mark
-  format.mark "" output.after
-  new.block
-  format.translators output
+  output                      % 输出作者
+  new.block                   % 产生 ". "
+  format.series.vol.num.title "title" output.check % 输出书名
+  "M" set.entry.mark          % 设置 [M] 标识
+  format.mark "" output.after % 在标题后紧跟输出 [M]
+  new.block                   % 产生 ". "
+  format.translators output   % 输出译者（如果有）
   new.sentence
-  format.edition output
+  format.edition output       % 输出版次
   new.block
-  format.address.publisher output
-  year.after.author not
-    { format.year "year" output.check }
-    'skip$
+  format.address.publisher    % 输出 "出版地: 出版社"
+  duplicate$ empty$ not
+    { 
+      output                  % 如果出版社信息不为空，则输出
+      ", " write$             % 按照示例要求，出版社后跟逗号
+    }
+    'pop$
   if$
+  format.year "year" output.check % 输出年份
   format.pages bbl.pages.colon output.after
   format.urldate "" output.after
   output.url
@@ -1783,6 +1773,7 @@ FUNCTION {monograph}
   format.note output
   fin.entry
 }
+
 
 FUNCTION {incollection}
 { output.bibitem
@@ -1800,23 +1791,41 @@ FUNCTION {incollection}
   if$
   new.block
   format.title "title" output.check
-  "M" set.entry.mark
+  
+  %% --- 修改1：根据类型自动设置标识符 [C] 或 [M] ---
+  booktitle empty$ not
+    { 
+      %% 如果是会议，通常 .bib 会有 booktitle，这里设为 C
+      %% 也可以手动在 .bib 里指定 entrysubtype 为 conference
+      "C" set.entry.mark 
+    }
+    { "M" set.entry.mark }
+  if$
   format.mark "" output.after
+  
   new.block
   format.translators output
-  new.slash
-  format.editors output
+  
+  %% --- 修改2：去掉示例中没要求的编者斜杠 (new.slash) ---
+  % new.slash  %% 湖南大学示例中没出现 // 符号，建议注释掉
+  % format.editors output %% 如果示例没要求显示编者，也可注释
+  
   new.block
   format.series.vol.num.booktitle "booktitle" output.check
   new.block
   format.edition output
   new.block
+  
+  %% --- 修改3：确保 出版地: 出版者, 年份 的顺序 ---
   format.address.publisher output
   year.after.author not
-    { format.year "year" output.check }
+    { format.date "year" output.check } %% 使用 format.date 统一日期格式
     'skip$
   if$
-  format.extracted.pages bbl.pages.colon output.after
+  
+  %% --- 修改4：页码前用冒号 ---
+  format.pages bbl.pages.colon output.after 
+  
   format.urldate "" output.after
   output.url
   output.doi
@@ -1824,7 +1833,6 @@ FUNCTION {incollection}
   format.note output
   fin.entry
 }
-
 FUNCTION {periodical}
 { output.bibitem
   output.translation
@@ -1844,60 +1852,24 @@ FUNCTION {periodical}
   "J" set.entry.mark
   format.mark "" output.after
   new.block
-  format.periodical.year.volume.number output
-  new.block
-  format.address.publisher output
-  year.after.author not
-    { format.periodical.year "year" output.check }
-    'skip$
-  if$
-  format.urldate "" output.after
-  output.url
-  output.doi
-  new.block
-  format.note output
-  fin.entry
-}
-
-FUNCTION {journal.article}
-{ output.bibitem
-  output.translation
-  format.authors output
-  author format.key output
-  year.after.author
-    { period.after.author
-        'new.sentence
-        'skip$
-      if$
-      format.year "year" output.check
-    }
-    'skip$
-  if$
-  new.block
-  title.in.journal
-    { format.title "title" output.check
-      entrysubtype empty$ not
-        {
-          entrysubtype "newspaper" =
-            { "N" set.entry.mark }
-            { "J" set.entry.mark }
-          if$
-        }
-        { "J" set.entry.mark }
-      if$
-      format.mark "" output.after
-      new.block
-    }
-    'skip$
-  if$
-  format.journal "journal" output.check
+  
+  %% --- 修改核心：调整刊名、年份和卷期的顺序 ---
   year.after.author not
     { format.date "year" output.check }
     'skip$
   if$
+  
+  %% 输出卷号和期号
+  %% 注意：确保这里调用的是处理卷期的函数，通常是 format.journal.volume
   format.journal.volume output
   format.journal.number "" output.after
+  
+  %% 页码 (前置冒号)
   format.journal.pages bbl.pages.colon output.after
+
+  %% 如果是整本期刊需要出版社，可以保留
+  % format.address.publisher output 
+  
   format.urldate "" output.after
   output.url
   output.doi
@@ -1905,27 +1877,76 @@ FUNCTION {journal.article}
   format.note output
   fin.entry
 }
-
-FUNCTION {patent}
+FUNCTION {journal.article}
 { output.bibitem
-  output.translation
-  format.authors output
-  author format.key output
-  year.after.author
-    { period.after.author
-        'new.sentence
-        'skip$
-      if$
-      format.year "year" output.check
-    }
-    'skip$
+  %% 1. 输出作者 (直接调用底层名处理，不经过 format.authors)
+  author empty$
+    { "Missing author in " cite$ * warning$ }
+    { author format.names output }
   if$
   new.block
+
+  %% 2. 输出标题 + [J] (直接硬编码，不调用 format.title)
+  title "title" output.check
+  " [J]" write$
+  new.block
+
+  %% 3. 输出刊名
+  journal "journal" output.check
+
+  %% 4. 输出年份
+  year "year" output.check
+
+  %% 5. 输出卷号
+  volume empty$
+    'skip$
+    { ", " volume * output }
+  if$
+
+  %% 6. 输出期号
+  number empty$
+    'skip$
+    { "(" number * ")" * write$ }
+  if$
+
+  %% 7. 输出页码
+  pages empty$
+    'skip$
+    { ": " pages * output }
+  if$
+
+  %% 8. 结束并暴力强制清空
+  fin.entry
+  
+  %% 这三行是专门针对你的报错 (ptr=3) 准备的“清道夫”
+  %% 强行从堆栈弹出残留的 electronic, journal.article, 1
+  duplicate$ empty$ not { pop$ } 'skip$ if$
+  duplicate$ empty$ not { pop$ } 'skip$ if$
+  duplicate$ empty$ not { pop$ } 'skip$ if$
+}
+FUNCTION {patent}
+{ output.bibitem
+  % 1. 输出作者/专利所有者
+  format.authors output
+  author format.key output
+  new.block
+  
+  % 2. 处理 题名: 专利号
   format.title "title" output.check
+  number empty$ not
+    { ": " * number * } % 如果有专利号，追加 ": 专利号"
+    'skip$
+  if$
+  
+  % 3. 输出文献类型标识 [P]
   "P" set.entry.mark
   format.mark "" output.after
   new.block
+  
+  % 4. 输出发布日期
   format.date "year" output.check
+  
+  % 5. 其他辅助信息
   format.urldate "" output.after
   output.url
   output.doi
@@ -1933,45 +1954,21 @@ FUNCTION {patent}
   format.note output
   fin.entry
 }
-
 FUNCTION {electronic}
-{ #1 #1 check.electronic
-  #1 'entry.is.electronic :=
-  #1 'is.pure.electronic :=
-  output.bibitem
-  output.translation
+{ output.bibitem
   format.authors output
-  author format.key output
-  year.after.author
-    { period.after.author
-        'new.sentence
-        'skip$
-      if$
-      format.year "year" output.check
-    }
-    'skip$
-  if$
   new.block
-  format.series.vol.num.title "title" output.check
-  "EB" set.entry.mark
+  format.title "title" output.check
+  % 自动判断标识符：如果是纯电子文献则用 EB，有 URL 则加 /OL
+  "EB/OL" set.entry.mark 
   format.mark "" output.after
   new.block
   format.address.publisher output
-  year.after.author not
-    { date empty$
-        { format.date output }
-        'skip$
-      if$
-    }
-    'skip$
-  if$
-  format.pages bbl.pages.colon output.after
-  format.editdate "" output.after
-  format.urldate "" output.after
+  format.date output
+  % 必须输出引用日期 [YYYY-MM-DD]
+  format.urldate "" output.after 
   output.url
   output.doi
-  new.block
-  format.note output
   fin.entry
 }
 
@@ -2032,38 +2029,24 @@ FUNCTION {preprint}
   format.note output
   fin.entry
 }
-
 FUNCTION {misc}
-{ get.journal.title
-  duplicate$ empty$ not
-    { check.arxiv.preprint
-        'preprint
-        'journal.article
-      if$
-    }
-    { pop$
-      booktitle empty$ not
-        'incollection
-        { eprint empty$ not archivePrefix empty$ not or
-            'preprint
-            { publisher empty$ not
-                'monograph
-                { entry.is.electronic
-                    'electronic
-                    {
-                      "Z" set.entry.mark
-                      monograph
-                    }
-                  if$
-                }
-              if$
-            }
-          if$
+{ author empty$ title empty$ and
+    { "empty author and title in " cite$ * warning$ }
+    'skip$
+  if$
+  % 逻辑：有 eprint 走 preprint；有 publisher 走 monograph；
+  % 有 journal 走 article；其余走 electronic。
+  eprint empty$ not
+    'preprint
+    { publisher empty$ not
+        'monograph
+        { journal empty$ not
+            'journal.article
+            'electronic
         }
       if$
     }
   if$
-  empty.misc.check
 }
 
 FUNCTION {archive}

@@ -354,8 +354,8 @@
 \newcommand\make@cntitle{%
   \begin{titlepage}%
       \vpostext{5cm}{\includegraphics[height=3cm]{figures/hnu_logo.png}}%
-      \vpostext{9.5cm}{\bf\sffamily\setfontsize{22pt}\hnu@thesisname}%
-      \vpostext{13.5cm}{\bf\sffamily\setfontsize{26pt}\hnu@title}%
+      \vpostext{9.5cm}{\sffamily\setfontsize{22pt}\hnu@thesisname}%
+      \vpostext{13.5cm}{\sffamily\setfontsize{26pt}\hnu@title}%
 
       \tikz[remember picture,overlay]
         \node [xshift=5cm,yshift=-20cm] at (current page.north west)%
@@ -402,7 +402,7 @@
       \tikz[remember picture,overlay]
         \node [xshift=5.4cm,yshift=-12cm] at (current page.north west)%
             [below right,align=left]%
-            {\parbox{12cm}{\bf\sffamily\setfontsize{22pt}\hnu@title}};
+            {\parbox{12cm}{\sffamily\setfontsize{22pt}\hnu@title}};
 
       \tikz[remember picture,overlay]
         \node [xshift=5.2cm,yshift=-18cm] at (current page.north west)%
@@ -464,12 +464,12 @@
     \thispagestyle{empty}
     \pagenumbering{Roman}
     % \addcontentsline{toc}{chapter}{学位论文原创性声明和学位论文版权使用授权书}
-    \setfontsize{12pt}[20pt]
+    \setfontsize{14pt}[20pt]
     \vspace*{-0.15cm}
     \begin{center}
       \sffamily
       \setfontsize{18pt}
-      \makebox[3.5cm][s]{\textbf\hnu@hnuname}\\
+      \makebox[3.5cm][s]{\textbf\hnu@hnuname}\\[-5pt]
       \textbf{学位论文原创性声明}
     \end{center}
     \vskip 0.3cm
@@ -541,7 +541,7 @@
 \addtocontents{lot}{\protect\noaddvspace}
 \newcommand\hnu@leaders{\titlerule*[0.5pc]{$\cdot$}}
   \titlecontents{chapter}[0bp]
-    {\addvspace{6bp}\bf\sffamily\setfontsize{12pt}[15pt]}
+    {\addvspace{6bp}\sffamily\setfontsize{12pt}[15pt]}
     {\contentspush{\thecontentslabel\unskip\hskip\ccwd\relax}}
     {}{\hnu@leaders\setfontsize{12pt}[12pt]\normalfont{\contentspage}}
   \titlecontents{section}

@@ -1,5 +1,6 @@
 {
-    "latex-workshop.latex.outDir": "./output",
+    // 1. 将其改回当前目录，或者直接删掉这一行（让 .latexmkrc 接管）
+    "latex-workshop.latex.outDir": "./", 
 
     "latex-workshop.latex.tools": [
         {
@@ -7,22 +8,42 @@
             "command": "latexmk",
             "args": [
                 "-xelatex",
+                "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
-                "-synctex=1",
                 "-shell-escape",
-                "-outdir=output",
+                "-g",
                 "%DOC%"
+            ]
+        },
+        {
+        "name": "xelatex",
+        "command": "xelatex",
+        "args": [
+            "-synctex=1",
+            "-interaction=nonstopmode",
+            "-file-line-error",
+            "-shell-escape",
+            "%DOC%"
+        ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%" // 注意这里用的是文件名，不要带后缀
             ]
         }
     ],
-
     "latex-workshop.latex.recipes": [
         {
-            "name": "latexmk (xelatex)",
-            "tools": ["latexmk_xelatex"]
+            "name": "XeLaTeX -> BibTeX -> XeLaTeX*2",
+            "tools": [
+            "xelatex",
+            "bibtex",
+            "xelatex",
+            "xelatex"
+            ]
         }
-    ],
-
-    "latex-workshop.latex.build.forceRecipeUsage": true
+    ]
 }
