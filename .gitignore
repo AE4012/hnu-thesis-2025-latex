@@ -16,7 +16,6 @@ download/
 *.cb
 *.cb2
 .*.lb
-output/
 
 ## Intermediate documents:
 *.dvi

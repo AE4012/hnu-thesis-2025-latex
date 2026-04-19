@@ -168,9 +168,9 @@
 \newcommand\hnu@makeheadrule{%
   \vbox to 15pt{%       
     \vskip -3pt % 这里的数值控制“文字底部”到“第一条线”的距离（可微调）
-    \hrule\@height 1.0pt \@width\headwidth
+    \hrule\@height 1.1pt \@width\headwidth
     \vskip 1pt
-    \hrule\@height 0.5pt \@width\headwidth
+    \hrule\@height 0.4pt \@width\headwidth
     \vfil
   }%
 }
@@ -248,6 +248,7 @@
 \ctexset{
     chapter = {
         format      = \centering\heiti\setfontsize{18pt},
+        numberformat = \heiti,
         nameformat  = {},
         % titleformat = \spacetitle,
         number      = \thechapter,
@@ -258,21 +259,24 @@
     },
     section = {
         format     = \heiti\setfontsize{15pt},
-        aftername  = \hspace{\ccwd},
+        numberformat = \heiti,
+        aftername  = \hspace{0.5\ccwd},
         beforeskip = 12pt,
         afterskip  = 12pt,
     },
     subsection = {
         format     = \heiti\setfontsize{14pt},
-        aftername  = \hspace{\ccwd},
+        numberformat = \heiti,
+        aftername  = \hspace{0.5\ccwd},
         % indent     = 2\ccwd,
         beforeskip = 6pt,
         afterskip  = 6pt,
     },
     subsubsection = {
         format     = \heiti\setfontsize{12pt},
+        numberformat = \heiti,
         number    = (\arabic{subsubsection}),
-        % aftername = \hspace{\ccwd},
+        aftername = \hspace{0.5\ccwd},
         beforeskip = 6pt,
         afterskip  = 6pt,
         % indent    = 3\ccwd,
@@ -367,14 +371,14 @@
 
           \setfontsize{12.5pt}%
           \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
-            \makebox[\@tw][s]{\sffamily\textbf{作者姓名}} & \makebox[\@cw][l]{\qquad\if@hnu@anonymous ******** \else \hnu@author \fi} \\
-            \makebox[\@tw][s]{\sffamily\textbf{指导老师}} & \begin{tabular}[t]{@{}l@{}}
+            \makebox[\@tw][s]{\sffamily{作者姓名}} & \makebox[\@cw][l]{\qquad\if@hnu@anonymous ******** \else \hnu@author \fi} \\
+            \makebox[\@tw][s]{\sffamily{指导老师}} & \begin{tabular}[t]{@{}l@{}}
                                                               \makebox[\@cw][l]{\qquad \if@hnu@anonymous ******** \else \hnu@supervisor \fi} \\
                                                               \makebox[\@cw][l]{\qquad \if@hnu@anonymous ******** \else \hnu@cosupervisor \fi} 
                                                           \end{tabular} \\
-            \makebox[\@tw][s]{\sffamily\textbf{培养单位}} & \makebox[\@cw][l]{\qquad \if@hnu@anonymous ******** \else \hnu@college \fi} \\
-            \makebox[\@tw][s]{\sffamily\textbf{专业类别}} & \makebox[\@cw][l]{\qquad \if@hnu@anonymous ******** \else \hnu@major \fi} \\
-            \makebox[\@tw][s]{\sffamily\textbf{专业领域}} & \makebox[\@cw][l]{\qquad \if@hnu@anonymous ******** \else \hnu@workon \fi} \\
+            \makebox[\@tw][s]{\sffamily{培养单位}} & \makebox[\@cw][l]{\qquad \if@hnu@anonymous ******** \else \hnu@college \fi} \\
+            \makebox[\@tw][s]{\sffamily{专业类别}} & \makebox[\@cw][l]{\qquad \if@hnu@anonymous ******** \else \hnu@major \fi} \\
+            \makebox[\@tw][s]{\sffamily{专业领域}} & \makebox[\@cw][l]{\qquad \if@hnu@anonymous ******** \else \hnu@workon \fi} \\
           \end{tabular}};%
 
       \clearpage
@@ -389,9 +393,9 @@
 
           \setfontsize{12pt}%
           \begin{tabularx}{\linewidth}{ll}%
-            \makebox[\@tw][s]{\sffamily\textbf{学校代码}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\hnu@hnucode} \\
-            \makebox[\@tw][s]{\sffamily\textbf{学号}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\if@hnu@anonymous ******** \else \hnu@authorid \fi} \\
-            \makebox[\@tw][s]{\sffamily\textbf{密级}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\hnu@secrettext}
+            \makebox[\@tw][s]{\sffamily{学校代码}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\hnu@hnucode} \\
+            \makebox[\@tw][s]{\sffamily{学号}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\if@hnu@anonymous ******** \else \hnu@authorid \fi} \\
+            \makebox[\@tw][s]{\sffamily{密级}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\hnu@secrettext}
           \end{tabularx}};%
 
       \tikz[remember picture,overlay]
@@ -412,15 +416,15 @@
 
           \setfontsize{12.5pt}%
           \begin{tabular}{@{}l}%
-            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily\textbf{作者姓名：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@author \fi} \\%
-            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily\textbf{指导老师：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@supervisor \fi}\\
+            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{作者姓名：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@author \fi} \\%
+            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{指导老师：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@supervisor \fi}\\
             \makebox[\@tw][s]{~}\linetext{\dimexpr\@cw-\@tw\relax}{l}{{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@cosupervisor \fi} \\
-            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily\textbf{培养单位：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@college \fi} \\
-            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily\textbf{专业类别：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@major \fi} \\
-            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily\textbf{专业领域：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@workon \fi} \\
-            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily\textbf{论文提交日期：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@submitdate \fi} \\
-            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily\textbf{论文答辩日期：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@defensedate \fi} \\
-            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily\textbf{答辩委员会主席：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@chair \fi}
+            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{培养单位：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@college \fi} \\
+            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{专业类别：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@major \fi} \\
+            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{专业领域：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@workon \fi} \\
+            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{论文提交日期：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@submitdate \fi} \\
+            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{论文答辩日期：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@defensedate \fi} \\
+            \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{答辩委员会主席：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@chair \fi}
           \end{tabular}};%
     \end{titlepage}
 }
@@ -464,12 +468,12 @@
     \thispagestyle{empty}
     \pagenumbering{Roman}
     % \addcontentsline{toc}{chapter}{学位论文原创性声明和学位论文版权使用授权书}
-    \setfontsize{14pt}[20pt]
+    \setfontsize{12pt}[20pt]
     \vspace*{-0.15cm}
     \begin{center}
       \sffamily
       \setfontsize{18pt}
-      \makebox[3.5cm][s]{\textbf\hnu@hnuname}\\[-5pt]
+      \makebox[3.5cm][s]{\textbf\hnu@hnuname}\\[-0.3cm]
       \textbf{学位论文原创性声明}
     \end{center}
     \vskip 0.3cm
@@ -541,18 +545,18 @@
 \addtocontents{lot}{\protect\noaddvspace}
 \newcommand\hnu@leaders{\titlerule*[0.5pc]{$\cdot$}}
   \titlecontents{chapter}[0bp]
-    {\addvspace{6bp}\sffamily\setfontsize{12pt}[15pt]}
-    {\contentspush{\thecontentslabel\unskip\hskip\ccwd\relax}}
+    {\addvspace{6bp}\heiti\setfontsize{12pt}[15pt]}
+    {\contentspush{\thecontentslabel\unskip\hskip 0.5\ccwd\relax}}
     {}{\hnu@leaders\setfontsize{12pt}[12pt]\normalfont{\contentspage}}
   \titlecontents{section}
       [2\ccwd]
       {\songti\setfontsize{12pt}[20pt]}
-      {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
+      {\contentspush{\thecontentslabel\hskip 0.5\ccwd\relax}}
       {}{\hnu@leaders\songti\setfontsize{12pt}[12pt]{\contentspage}}
   \titlecontents{subsection}
       [4\ccwd]
       {\songti\setfontsize{12pt}[20pt]}
-      {\contentspush{\thecontentslabel\hskip\ccwd\relax}}
+      {\contentspush{\thecontentslabel\hskip 0.5\ccwd\relax}}
       {}{\hnu@leaders\songti\setfontsize{12pt}[12pt]{\contentspage}}
 
   \titlecontents{figure}[0bp]
