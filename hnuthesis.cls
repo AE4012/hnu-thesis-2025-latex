@@ -161,7 +161,7 @@
     paper=a4paper,
     top=2.5cm, bottom=2.5cm,
     left=3.0cm, right=3.0cm,
-    headheight=15pt, headsep=1.0cm,
+    headheight=15pt, headsep=0.6cm,
     footskip=1.5cm}
 \RequirePackage{fancyhdr}
 \newcommand\hnu@oddheader{\hnu@hnuname\hnu@thesisname}
@@ -441,7 +441,7 @@
         \vpostext{11.5cm}{\setfontsize{12pt} requirements for the degree of}%
         \vpostext{12.75cm}{\setfontsize{12pt} \if@hnu@anonymous ******** \else \hnu@endoctor \fi}%
         \vpostext{14.0cm}{\setfontsize{12pt} in}%
-        \vpostext{15.25cm}{\setfontsize{12pt} \if@hnu@anonymous ******** \else \hnu@endmajor \fi}%
+        \vpostext{15.25cm}{\setfontsize{12pt} \if@hnu@anonymous ******** \else \hnu@enmajor \fi}%
         \vpostext{16.5cm}{\setfontsize{12pt} in the}%
         \vpostext{17.75cm}{\setfontsize{12pt} Graduate School}%
         \vpostext{19.0cm}{\setfontsize{12pt} of}%
