@@ -390,12 +390,13 @@
 
           \setlength{\@tw}{66.5pt}
           \setlength{\@cw}{8cm}
-
+          \newlength{\@sc}
+          \setlength{\@sc}{50pt}
           \setfontsize{12pt}%
           \begin{tabularx}{\linewidth}{ll}%
-            \makebox[\@tw][s]{\sffamily{学校代码}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\hnu@hnucode} \\
-            \makebox[\@tw][s]{\sffamily{学号}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\if@hnu@anonymous ******** \else \hnu@authorid \fi} \\
-            \makebox[\@tw][s]{\sffamily{密级}} & \linetext{\@cw}{l}{\hspace{1\ccwd}\hnu@secrettext}
+            \makebox[\@sc][s]{\sffamily{学校代码}} & \linetext{\@cw}{l}{\hnu@hnucode} \\
+            \makebox[\@sc][s]{\sffamily{学号}} & \linetext{\@cw}{l}{\if@hnu@anonymous ******** \else \hnu@authorid \fi} \\
+            \makebox[\@sc][s]{\sffamily{密级}} & \linetext{\@cw}{l}{\hnu@secrettext}
           \end{tabularx}};%
 
       \tikz[remember picture,overlay]
