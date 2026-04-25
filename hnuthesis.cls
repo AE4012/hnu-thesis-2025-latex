@@ -159,15 +159,17 @@
 
 \geometry{
     paper=a4paper,
-    top=2.5cm, bottom=2.5cm,
-    left=3.0cm, right=3.0cm,
-    headheight=15pt, headsep=0.6cm,
-    footskip=1.5cm}
+    top=2.5cm, bottom=2.5cm,  % 上下页边距
+    left=3.0cm, right=3.0cm,  % 左右页边距
+    headheight= 0.5cm, % 页眉高度
+    headsep=0.6cm, % 页眉底线到正文顶线之间的垂直距离（2.5-1.4-0.5=0.6） 1.4为页眉到顶端的距离
+    footskip=1.1cm % 页脚到正文底线之间的垂直距离
+    }
 \RequirePackage{fancyhdr}
 \newcommand\hnu@oddheader{\hnu@hnuname\hnu@thesisname}
 \newcommand\hnu@makeheadrule{%
   \vbox to 15pt{%       
-    \vskip -3pt % 这里的数值控制“文字底部”到“第一条线”的距离（可微调）
+    \vskip -2.5pt % 这里的数值控制“文字底部”到“第一条线”的距离（可微调）
     \hrule\@height 1.1pt \@width\headwidth
     \vskip 1pt
     \hrule\@height 0.4pt \@width\headwidth
@@ -369,7 +371,7 @@
           \newlength{\@cw}
           \setlength{\@cw}{6.4cm}
 
-          \setfontsize{12.5pt}%
+          \setfontsize{12pt}%
           \begin{tabular}{@{}l@{\hspace{\ccwd}}l@{}}%
             \makebox[\@tw][s]{\sffamily{作者姓名}} & \makebox[\@cw][l]{\qquad\if@hnu@anonymous ******** \else \hnu@author \fi} \\
             \makebox[\@tw][s]{\sffamily{指导老师}} & \begin{tabular}[t]{@{}l@{}}
@@ -389,7 +391,7 @@
             [below right,align=left] {%
 
           \setlength{\@tw}{66.5pt}
-          \setlength{\@cw}{8cm}
+          \setlength{\@cw}{3cm}
           \newlength{\@sc}
           \setlength{\@sc}{50pt}
           \setfontsize{12pt}%
@@ -415,7 +417,7 @@
           \setlength{\@tw}{107pt}
           \setlength{\@cw}{9.5cm}
 
-          \setfontsize{12.5pt}%
+          \setfontsize{12pt}%
           \begin{tabular}{@{}l}%
             \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{作者姓名：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@author \fi} \\%
             \linetext{\@cw}{l}{\makebox[\@tw][s]{\sffamily{指导老师：}}{\hspace{3\ccwd}}\if@hnu@anonymous ******** \else \hnu@supervisor \fi}\\
@@ -474,8 +476,8 @@
     \begin{center}
       \sffamily
       \setfontsize{18pt}
-      \makebox[3.5cm][s]{\textbf\hnu@hnuname}\\[-0.3cm]
-      \textbf{学位论文原创性声明}
+      \makebox[3.5cm][s]{\hnu@hnuname}\\[-0.5cm]
+      {学位论文原创性声明}
     \end{center}
     \vskip 0.3cm
 
@@ -483,11 +485,11 @@
 
     \vskip 1cm
     作者签名：\qquad\qquad\qquad\qquad\qquad\quad 日期：\qquad\quad 年\qquad 月\qquad 日
-    \vskip 1cm
+    \vskip 4cm
 
     \begin{center}
       \sffamily
-      \setfontsize{18pt}\textbf{学位论文版权使用授权书}
+      \setfontsize{18pt}{学位论文版权使用授权书}
     \end{center}
     \vskip 0.3cm
 
@@ -527,7 +529,7 @@
 
 \newcommand\keywords[1]{%
   \par\phantom{empty}\par\noindent\hangindent=4\ccwd\relax%
-  \sffamily\textbf{关键词}：#1}
+  \sffamily{关键词}：#1}
 \newcommand\enkeywords[1]{%
   \par\phantom{empty}\par\vspace{-1.1em}\noindent\hangindent=\baselineskip\relax%   %todo
   \textbf{Key Words: #1}}
@@ -550,12 +552,12 @@
     {\contentspush{\thecontentslabel\unskip\hskip 0.5\ccwd\relax}}
     {}{\hnu@leaders\setfontsize{12pt}[12pt]\normalfont{\contentspage}}
   \titlecontents{section}
-      [2\ccwd]
+      [1.5\ccwd]
       {\songti\setfontsize{12pt}[20pt]}
       {\contentspush{\thecontentslabel\hskip 0.5\ccwd\relax}}
       {}{\hnu@leaders\songti\setfontsize{12pt}[12pt]{\contentspage}}
   \titlecontents{subsection}
-      [4\ccwd]
+      [2.0\ccwd]
       {\songti\setfontsize{12pt}[20pt]}
       {\contentspush{\thecontentslabel\hskip 0.5\ccwd\relax}}
       {}{\hnu@leaders\songti\setfontsize{12pt}[12pt]{\contentspage}}
@@ -638,7 +640,7 @@
 \DeclareCaptionLabelSeparator{zhspace}{\hspace{\ccwd}}
 \captionsetup{
     format = hang,
-    font = {small,bf,sf},
+    font = {small,sf},
     labelsep = zhspace,
 }
 \setlength{\textfloatsep}{6pt}
